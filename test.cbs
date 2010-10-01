@@ -1,0 +1,37 @@
+Type get_mothers_day_output_struct      
+  mothersDay as String    
+End Type
+
+Function GetMothersDay(whichYear as Integer) As String
+   Dim DB                    As New SQLDB
+   Dim InputParameters       As New List
+   Dim OutputParameters      As get_mothers_day_output_struct
+       
+   InputParameters.ItemType = "variant"
+   InputParameters.AppendItem whichYear
+ 
+   DB.ExecuteProc "get_mothers_day", InputParameters, OutputParameters
+   mothersDay = Trim(OutputParameters.mothersDay)
+
+   GetMothersDay = mothersDay
+End function
+
+Function GetDateOnlyFromIsoDateString(iso as String) as Date
+	Dim outputDate as Date
+	Dim index as Integer
+	index = InStr(iso,"T")
+	outputDate = Left(iso,index - 1)
+	GetDateOnlyFromIsoDateString = outputDate
+End Function
+
+Sub test()
+	Dim mothersDay as String
+	Dim mothersDayDate as Date
+	Dim whichYear as Integer
+
+	whichYear = 2012
+	
+	mothersDay = GetMothersDay(whichYear)
+	mothersDayDate = GetDateOnlyFromIsoDateString(mothersDay)
+	Debug.Print "Mother's Day " & whichYear & " is " & cstr(mothersDayDate)
+End Sub
