@@ -1,0 +1,4 @@
+An example Oracle procedure for making SOAP web service calls
+
+It is dependent on the soap_api package available at:
+http://www.oracle-base.com/dba/miscellaneous/soap_api.sql
